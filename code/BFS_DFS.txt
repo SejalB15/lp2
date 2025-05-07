@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+vector<vector<int>> graph;
+vector<bool> visitedDFS, visitedBFS;
+
+// Recursive DFS function
+void DFS(int node) {
+    visitedDFS[node] = true;
+    cout << node << " ";
+    for (int neighbor : graph[node]) {
+        if (!visitedDFS[neighbor]) {
+            DFS(neighbor);
+        }
+    }
+}
+
+// Iterative BFS function using queue
+void BFS(int start) {
+    queue<int> q;
+    visitedBFS[start] = true;
+    q.push(start);
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " ";
+
+        for (int neighbor : graph[node]) {
+            if (!visitedBFS[neighbor]) {
+                visitedBFS[neighbor] = true;
+                q.push(neighbor);
+            }
+        }
+    }
+}
+
+int main() {
+    int vertices, edges;
+    cout << "Enter number of vertices: ";
+    cin >> vertices;
+
+    cout << "Enter number of edges: ";
+    cin >> edges;
+
+    graph.resize(vertices);
+    visitedDFS.resize(vertices, false);
+    visitedBFS.resize(vertices, false);
+
+    cout << "Enter " << edges << " edges (u v):\n";
+    for (int i = 0; i < edges; i++) {
+        int u, v;
+        cin >> u >> v;
+        graph[u].push_back(v);
+        graph[v].push_back(u); // Because it's an undirected graph
+    }
+
+    int startNode;
+    cout << "Enter starting node for DFS and BFS: ";
+    cin >> startNode;
+
+    cout << "\nDFS traversal: ";
+    DFS(startNode);
+
+    cout << "\nBFS traversal: ";
+    BFS(startNode);
+
+    return 0;
+}

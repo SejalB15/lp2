@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string userInput;
+
+    cout << "Welcome to Simple Customer Service Chatbot!\n";
+    cout << "Type 'bye' to exit the chat.\n\n";
+
+    while (true) {
+        cout << "You: ";
+        getline(cin, userInput);
+
+        if (userInput == "hi" || userInput == "hello") {
+            cout << "Bot: Hello! How can I help you today?\n";
+        } 
+        else if (userInput == "what is your return policy") {
+            cout << "Bot: You can return any item within 7 days of delivery.\n";
+        } 
+        else if (userInput == "how to check order status") {
+            cout << "Bot: Please share your order ID to check the status.\n";
+        } 
+        else if (userInput == "what products are available") {
+            cout << "Bot: We sell mobiles, laptops, earphones, and chargers.\n";
+        } 
+        else if (userInput == "do you offer free delivery") {
+            cout << "Bot: Yes! Free delivery is available on orders above ₹500.\n";
+        }
+        else if (userInput == "how can i contact support") {
+            cout << "Bot: You can call 1800-123-456 or email support@shop.com\n";
+        }
+        else if (userInput == "how to cancel an order") {
+            cout << "Bot: Go to 'My Orders' section and click on 'Cancel Order'.\n";
+        }
+        else if (userInput == "how to change my address") {
+            cout << "Bot: You can update your address in your profile settings.\n";
+        }
+        else if (userInput == "bye") {
+            cout << "Bot: Thank you! Have a nice day.\n";
+            break;
+        } 
+        else {
+            cout << "Bot: Sorry, I didn't understand that. Please ask something else.\n";
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,46 @@
+public class calci {
+    public Double val1 { get; set; }
+    public Double val2 { get; set; }
+    public Double result { get; set; }
+    public String func { get; set; }
+    public String message { get; set; }
+
+    public calci() {
+        val1 = 0;
+        val2 = 0;
+        result = 0;
+        func = '';
+        message = '';
+    }
+
+    public void find() {
+        message = ''; // Clear previous message
+
+        if (func == 'add') {
+            result = val1 + val2;
+        } else if (func == 'sub') {
+            result = val1 - val2;
+        } else if (func == 'mul') {
+            result = val1 * val2;
+        } else if (func == 'div') {
+            if (val2 != 0) {
+                result = val1 / val2;
+            } else {
+                result = null;
+                message = 'Error: Division by zero';
+            }
+        } else if (func == 'mod') {
+            if (val2 != 0) {
+                Integer a = Integer.valueOf(Math.floor(val1));
+                Integer b = Integer.valueOf(Math.floor(val2));
+                result = Math.mod(a, b);
+            } else {
+                result = null;
+                message = 'Error: Modulo by zero';
+            }
+        } else {
+            result = null;
+            message = 'Invalid operation';
+        }
+    }
+}

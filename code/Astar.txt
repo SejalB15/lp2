@@ -1,0 +1,107 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <cmath>
+#include <algorithm>
+using namespace std;
+
+const int ROW = 5;
+const int COL = 5;
+
+struct Node {
+    int x, y;
+    int g, h;
+    Node* parent;
+
+    Node(int x, int y, int g, int h, Node* parent = nullptr)
+        : x(x), y(y), g(g), h(h), parent(parent) {}
+
+    int f() const { return g + h; }
+};
+
+// Comparison for priority queue (min-heap based on f cost)
+struct Compare {
+    bool operator()(const Node* a, const Node* b) {
+        return a->f() > b->f();
+    }
+};
+
+// Check if position is valid and not blocked
+bool isValid(int x, int y, const vector<vector<int>>& grid) {
+    return (x >= 0 && x < ROW && y >= 0 && y < COL && grid[x][y] == 0);
+}
+
+// Manhattan Distance
+int heuristic(int x1, int y1, int x2, int y2) {
+    return abs(x1 - x2) + abs(y1 - y2);
+}
+
+// A* Algorithm
+void aStarSearch(vector<vector<int>>& grid, int startX, int startY, int goalX, int goalY) {
+    priority_queue<Node*, vector<Node*>, Compare> openList;
+    vector<vector<bool>> visited(ROW, vector<bool>(COL, false));
+
+    Node* start = new Node(startX, startY, 0, heuristic(startX, startY, goalX, goalY));
+    openList.push(start);
+
+    while (!openList.empty()) {
+        Node* current = openList.top();
+        openList.pop();
+
+        int x = current->x;
+        int y = current->y;
+
+        if (visited[x][y]) continue;
+        visited[x][y] = true;
+
+        // Goal reached
+        if (x == goalX && y == goalY) {
+            cout << "Path: ";
+            vector<pair<int, int>> path;
+            while (current) {
+                path.push_back({current->x, current->y});
+                current = current->parent;
+            }
+            reverse(path.begin(), path.end());
+            for (auto p : path)
+                cout << "(" << p.first << "," << p.second << ") ";
+            cout << endl;
+            return;
+        }
+
+        // Move in 4 directions
+        int dx[] = {-1, 1, 0, 0};
+        int dy[] = {0, 0, -1, 1};
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (isValid(nx, ny, grid) && !visited[nx][ny]) {
+                int g = current->g + 1;
+                int h = heuristic(nx, ny, goalX, goalY);
+                openList.push(new Node(nx, ny, g, h, current));
+            }
+        }
+    }
+
+    cout << "No path found.\n";
+}
+
+int main() {
+    // 0 = free space, 1 = wall
+    vector<vector<int>> grid = {
+        {0, 0, 0, 0, 0},
+        {1, 1, 0, 1, 0},
+        {0, 0, 0, 0, 0},
+        {0, 1, 1, 1, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    int startX = 0, startY = 0;
+    int goalX = 4, goalY = 4;
+
+    aStarSearch(grid, startX, startY, goalX, goalY);
+
+    return 0;
+}

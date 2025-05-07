@@ -1,0 +1,55 @@
+<apex:page controller="calci">
+    <apex:form>
+        <apex:pageBlock title="Simple Calculator">
+            <apex:pageBlockSection columns="2">
+
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel value="Value 1"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem>
+                    <apex:inputText value="{!val1}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel value="Value 2"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem>
+                    <apex:inputText value="{!val2}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel value="Operation"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem>
+                    <apex:selectRadio value="{!func}" layout="pageDirection">
+                        <apex:selectOption itemValue="add" itemLabel="Add"/>
+                        <apex:selectOption itemValue="sub" itemLabel="Subtract"/>
+                        <apex:selectOption itemValue="mul" itemLabel="Multiply"/>
+                        <apex:selectOption itemValue="div" itemLabel="Divide"/>
+                        <apex:selectOption itemValue="mod" itemLabel="Modulo"/>
+                    </apex:selectRadio>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel value="Result"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem>
+                    <apex:outputText value="{!result}" id="res"/>
+                    <apex:actionStatus id="sts" startText="Calculating..."/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel value="Message"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem>
+                    <apex:outputText value="{!message}" style="color:red;" id="msg"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Calculate" action="{!find}" reRender="res,msg" status="sts"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

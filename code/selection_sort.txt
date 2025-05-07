@@ -1,0 +1,47 @@
+#include <iostream> // For input and output
+using namespace std;
+
+void selectionSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) { // Loop through each element except the last
+        int minIndex = i; // Assume the current element is the minimum
+
+        for (int j = i + 1; j < n; j++) { // Check rest of the array
+            if (arr[j] < arr[minIndex]) { // If a smaller element is found
+                minIndex = j; // Update the index of the smallest element
+            }
+        }
+
+        // Swap the smallest element with the current element
+        int temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+}
+
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " "; // Print each element
+    }
+    cout << endl;
+}
+
+int main() {
+    int arr[100], n;
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter " << n << " elements:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i]; // Take array input from user
+    }
+
+    cout << "Original array: ";
+    printArray(arr, n);
+
+    selectionSort(arr, n); // Call selection sort function
+
+    cout << "Sorted array: ";
+    printArray(arr, n); // Print sorted array
+
+    return 0;
+}
